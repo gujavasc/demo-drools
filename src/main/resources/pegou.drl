@@ -1,0 +1,30 @@
+package br.com.ricardolonga.drools
+ 
+import br.com.ricardolonga.drools.domain.Pessoa;
+import br.com.ricardolonga.drools.domain.Pessoa.Sexo;
+import br.com.ricardolonga.drools.domain.Pessoa.EstadoCivil;
+import br.com.ricardolonga.drools.domain.Resultado;
+import br.com.ricardolonga.drools.domain.Resultado.Status;
+ 
+dialect "java" 
+ 
+rule "Se você pegou, então infere o novo fato Resultado" no-loop ruleflow-group "pegou"
+    when
+        $homem : Pessoa( sexo == Sexo.MASCULINO )
+        $mulher : Pessoa( sexo == Sexo.FEMININO )
+    then	
+        Resultado resultado = new Resultado();
+        resultado.setStatus(Status.SUCESSO);
+        System.out.println("Inferindo o resultado (sucesso)...");
+        insert(resultado);
+end
+ 
+rule "Se resultado for Sucesso, então mostra mensagem" no-loop ruleflow-group "pegou"
+    when
+    	$resultado : Resultado( status == Status.SUCESSO )
+        $homem : Pessoa( sexo == Sexo.MASCULINO )
+        $mulher : Pessoa( sexo == Sexo.FEMININO )
+    then	
+        System.out.println($homem.getNome() + " pegou a " + $mulher.getNome() + ".");
+end
+ 

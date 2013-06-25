@@ -1,0 +1,21 @@
+package br.com.ricardolonga.drools
+ 
+import br.com.ricardolonga.drools.domain.Pessoa;
+import br.com.ricardolonga.drools.domain.Pessoa.Sexo;
+import br.com.ricardolonga.drools.domain.Pessoa.EstadoCivil;
+ 
+dialect "java" 
+ 
+rule "Se a mulher estiver namorando" no-loop ruleflow-group "ela-tem-namorado"
+    when
+        $p : Pessoa( sexo == Sexo.FEMININO, estadoCivil == EstadoCivil.NAMORANDO )
+    then
+        System.out.println($p.getNome() + " tem namorado.");
+end
+ 
+rule "Se a mulher estiver solteira" no-loop ruleflow-group "ela-tem-namorado"
+    when
+        $p : Pessoa( sexo == Sexo.FEMININO, estadoCivil == EstadoCivil.SOLTEIRO )
+    then
+        System.out.println($p.getNome() + " esta solteira.");
+end

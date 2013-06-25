@@ -1,0 +1,21 @@
+package br.com.ricardolonga.drools
+ 
+import br.com.ricardolonga.drools.domain.Pessoa;
+import br.com.ricardolonga.drools.domain.Pessoa.Sexo;
+import br.com.ricardolonga.drools.domain.Pessoa.EstadoCivil;
+ 
+dialect "java" 
+  
+rule "Se a mulher estiver bêbada" no-loop ruleflow-group "ela-esta-bebada"
+    when
+        $p : Pessoa( sexo == Sexo.FEMININO, bebado == true )
+    then
+        System.out.println($p.getNome() + " esta bebada.");
+end
+  
+rule "Se a mulher estiver sóbria" no-loop ruleflow-group "ela-esta-bebada"
+    when
+        $p : Pessoa( sexo == Sexo.FEMININO, bebado == false )
+    then
+        System.out.println($p.getNome() + " esta sobria.");
+end

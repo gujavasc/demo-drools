@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<definitions id="Definition"
+             targetNamespace="http://www.jboss.org/drools"
+             typeLanguage="http://www.java.com/javaTypes"
+             expressionLanguage="http://www.mvel.org/2.0"
+             xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd"
+             xmlns:g="http://www.jboss.org/drools/flow/gpd"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+             xmlns:tns="http://www.jboss.org/drools">
+
+  <process processType="Private" isExecutable="true" id="pegarPessoaId" name="Pegar pessoa" tns:packageName="br.com.ricardolonga.drools" >
+
+    <extensionElements>
+     <tns:import name="br.com.ricardolonga.drools.domain.*" />
+     <tns:import name="br.com.ricardolonga.drools.domain.Pessoa.EstadoCivil" />
+     <tns:import name="br.com.ricardolonga.drools.domain.Pessoa.Sexo" />
+     <tns:import name="br.com.ricardolonga.drools.domain.Resultado.Status" />
+    </extensionElements>
+    <!-- nodes -->
+    <startEvent id="_1" name="Start" />
+    <endEvent id="_3" name="End" >
+        <terminateEventDefinition />
+    </endEvent>
+    <businessRuleTask id="_4" name="Ela tem namorado?" g:ruleFlowGroup="ela-tem-namorado" >
+    </businessRuleTask>
+    <exclusiveGateway id="_5" name="Gateway" gatewayDirection="Diverging" />
+    <businessRuleTask id="_6" name="Ela está bêbada?" g:ruleFlowGroup="ela-esta-bebada" >
+    </businessRuleTask>
+    <businessRuleTask id="_7" name="Você é bonito?" g:ruleFlowGroup="voce-eh-bonito" >
+    </businessRuleTask>
+    <exclusiveGateway id="_9" name="Gateway" gatewayDirection="Diverging" />
+    <businessRuleTask id="_10" name="Pegou!" g:ruleFlowGroup="pegou" >
+    </businessRuleTask>
+    <businessRuleTask id="_11" name="Você tem dinheiro?" g:ruleFlowGroup="voce-tem-dinheiro" >
+    </businessRuleTask>
+    <exclusiveGateway id="_12" name="Gateway" gatewayDirection="Converging" />
+    <exclusiveGateway id="_13" name="Gateway" gatewayDirection="Diverging" />
+    <businessRuleTask id="_14" name="Você tem carro?" g:ruleFlowGroup="voce-tem-carro" >
+    </businessRuleTask>
+    <businessRuleTask id="_15" name="Procure outra!" g:ruleFlowGroup="procure-outra" >
+    </businessRuleTask>
+    <exclusiveGateway id="_17" name="Gateway" gatewayDirection="Converging" />
+    <exclusiveGateway id="_16" name="Gateway" gatewayDirection="Diverging" />
+    <exclusiveGateway id="_19" name="Gateway" gatewayDirection="Converging" />
+    <exclusiveGateway id="_18" name="Gateway" gatewayDirection="Diverging" />
+
+    <!-- connections -->
+    <sequenceFlow id="_19-_3" sourceRef="_19" targetRef="_3" />
+    <sequenceFlow id="_1-_4" sourceRef="_1" targetRef="_4" />
+    <sequenceFlow id="_4-_5" sourceRef="_4" targetRef="_5" />
+    <sequenceFlow id="_5-_6" sourceRef="_5" targetRef="_6" name="Namorando" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.jboss.org/drools/rule" >Pessoa ( sexo == Sexo.FEMININO, estadoCivil == EstadoCivil.NAMORANDO )</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_5-_7" sourceRef="_5" targetRef="_7" name="Solteira" tns:priority="10" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.jboss.org/drools/rule" >eval(true)</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_7-_9" sourceRef="_7" targetRef="_9" />
+    <sequenceFlow id="_12-_10" sourceRef="_12" targetRef="_10" />
+    <sequenceFlow id="_9-_11" sourceRef="_9" targetRef="_11" name="Feio" tns:priority="10" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.jboss.org/drools/rule" >eval(true)</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_9-_12" sourceRef="_9" targetRef="_12" name="Bonito" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.jboss.org/drools/rule" >Pessoa( sexo == Sexo.MASCULINO, bonito == true )</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_16-_12" sourceRef="_16" targetRef="_12" name="Motorizado" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.jboss.org/drools/rule" >Pessoa( sexo == Sexo.MASCULINO, temCarro == true )</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_18-_12" sourceRef="_18" targetRef="_12" name="Bêbada" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.jboss.org/drools/rule" >Pessoa( sexo == Sexo.FEMININO, bebado == true )</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_11-_13" sourceRef="_11" targetRef="_13" />
+    <sequenceFlow id="_13-_14" sourceRef="_13" targetRef="_14" name="Rico" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.jboss.org/drools/rule" >Pessoa( sexo == Sexo.MASCULINO, rico == true )</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_17-_15" sourceRef="_17" targetRef="_15" />
+    <sequenceFlow id="_13-_17" sourceRef="_13" targetRef="_17" name="Pobre" tns:priority="10" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.jboss.org/drools/rule" >eval(true)</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_16-_17" sourceRef="_16" targetRef="_17" name="A pé" tns:priority="10" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.jboss.org/drools/rule" >eval(true)</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_18-_17" sourceRef="_18" targetRef="_17" name="Sóbria" tns:priority="10" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.jboss.org/drools/rule" >eval(true)</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_14-_16" sourceRef="_14" targetRef="_16" />
+    <sequenceFlow id="_10-_19" sourceRef="_10" targetRef="_19" />
+    <sequenceFlow id="_15-_19" sourceRef="_15" targetRef="_19" />
+    <sequenceFlow id="_6-_18" sourceRef="_6" targetRef="_18" />
+
+  </process>
+
+  <bpmndi:BPMNDiagram>
+    <bpmndi:BPMNPlane bpmnElement="pegarPessoaId" >
+      <bpmndi:BPMNShape bpmnElement="_1" >
+        <dc:Bounds x="24" y="12" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_3" >
+        <dc:Bounds x="348" y="728" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_4" >
+        <dc:Bounds x="120" y="12" width="145" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_5" >
+        <dc:Bounds x="168" y="84" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_6" >
+        <dc:Bounds x="24" y="180" width="145" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_7" >
+        <dc:Bounds x="216" y="180" width="145" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_9" >
+        <dc:Bounds x="264" y="264" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_10" >
+        <dc:Bounds x="36" y="648" width="121" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_11" >
+        <dc:Bounds x="384" y="264" width="144" height="49" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_12" >
+        <dc:Bounds x="72" y="540" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_13" >
+        <dc:Bounds x="432" y="348" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_14" >
+        <dc:Bounds x="588" y="348" width="145" height="49" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_15" >
+        <dc:Bounds x="600" y="648" width="121" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_17" >
+        <dc:Bounds x="636" y="540" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_16" >
+        <dc:Bounds x="636" y="432" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_19" >
+        <dc:Bounds x="348" y="648" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_18" >
+        <dc:Bounds x="72" y="432" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="_19-_3" >
+        <di:waypoint x="372" y="672" />
+        <di:waypoint x="372" y="752" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_1-_4" >
+        <di:waypoint x="48" y="36" />
+        <di:waypoint x="192" y="36" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_4-_5" >
+        <di:waypoint x="192" y="36" />
+        <di:waypoint x="192" y="108" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_5-_6" >
+        <di:waypoint x="192" y="108" />
+        <di:waypoint x="96" y="204" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_5-_7" >
+        <di:waypoint x="192" y="108" />
+        <di:waypoint x="288" y="204" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_7-_9" >
+        <di:waypoint x="288" y="204" />
+        <di:waypoint x="288" y="288" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_12-_10" >
+        <di:waypoint x="96" y="564" />
+        <di:waypoint x="96" y="672" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_9-_11" >
+        <di:waypoint x="288" y="288" />
+        <di:waypoint x="456" y="288" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_9-_12" >
+        <di:waypoint x="288" y="288" />
+        <di:waypoint x="96" y="564" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_16-_12" >
+        <di:waypoint x="660" y="456" />
+        <di:waypoint x="96" y="564" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_18-_12" >
+        <di:waypoint x="96" y="456" />
+        <di:waypoint x="96" y="564" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_11-_13" >
+        <di:waypoint x="456" y="288" />
+        <di:waypoint x="456" y="372" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_13-_14" >
+        <di:waypoint x="456" y="372" />
+        <di:waypoint x="660" y="372" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_17-_15" >
+        <di:waypoint x="660" y="564" />
+        <di:waypoint x="660" y="672" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_13-_17" >
+        <di:waypoint x="456" y="372" />
+        <di:waypoint x="660" y="564" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_16-_17" >
+        <di:waypoint x="660" y="456" />
+        <di:waypoint x="660" y="564" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_18-_17" >
+        <di:waypoint x="96" y="456" />
+        <di:waypoint x="660" y="564" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_14-_16" >
+        <di:waypoint x="660" y="372" />
+        <di:waypoint x="660" y="456" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_10-_19" >
+        <di:waypoint x="96" y="672" />
+        <di:waypoint x="372" y="672" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_15-_19" >
+        <di:waypoint x="660" y="672" />
+        <di:waypoint x="372" y="672" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_6-_18" >
+        <di:waypoint x="96" y="204" />
+        <di:waypoint x="96" y="456" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+
+</definitions>

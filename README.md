@@ -1,4 +1,6 @@
 demo-drools
 ===========
 
-DemonstraÃ§Ã£o sobre JBoss Drools
+Projeto utilizado para a demonstração do JBoss Drools 5 com jBPM 5 no The Developers Conference 2013 (Florianópolis e São Paulo). 
+
+Autor: Ricardo da Silva Longa (@ricardolonga) / www.ricardolonga.com.br 

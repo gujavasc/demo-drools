@@ -1,0 +1,21 @@
+package br.com.ricardolonga.drools
+ 
+import br.com.ricardolonga.drools.domain.Pessoa;
+import br.com.ricardolonga.drools.domain.Pessoa.Sexo;
+import br.com.ricardolonga.drools.domain.Pessoa.EstadoCivil;
+ 
+dialect "java" 
+  
+rule "Se tem carro" no-loop ruleflow-group "voce-tem-carro"
+    when
+        $p : Pessoa( sexo == Sexo.MASCULINO, temCarro == true )
+    then
+        System.out.println($p.getNome() + " tem carro.");
+end
+  
+rule "Se não tem carro" no-loop ruleflow-group "voce-tem-carro"
+    when
+        $p : Pessoa( sexo == Sexo.MASCULINO, temCarro == false )
+    then
+        System.out.println($p.getNome() + " nao tem carro.");
+end

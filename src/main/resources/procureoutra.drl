@@ -1,0 +1,29 @@
+package br.com.ricardolonga.drools
+ 
+import br.com.ricardolonga.drools.domain.Pessoa;
+import br.com.ricardolonga.drools.domain.Pessoa.Sexo;
+import br.com.ricardolonga.drools.domain.Pessoa.EstadoCivil;
+import br.com.ricardolonga.drools.domain.Resultado;
+import br.com.ricardolonga.drools.domain.Resultado.Status;
+ 
+dialect "java" 
+ 
+rule "Se procure outra, então infere o novo fato Resultado" no-loop ruleflow-group "procure-outra"
+    when
+        Pessoa( sexo == Sexo.MASCULINO )
+        Pessoa( sexo == Sexo.FEMININO )
+    then
+        Resultado resultado = new Resultado();
+        resultado.setStatus(Status.ERRO);
+        System.out.println("Inferindo o resultado (erro)...");
+        insert(resultado);
+end
+ 
+rule "Se resultado for Erro, então mostra mensagem" no-loop ruleflow-group "procure-outra"
+    when
+    	Resultado( status == Status.ERRO )
+        $homem : Pessoa( sexo == Sexo.MASCULINO )
+        $mulher : Pessoa( sexo == Sexo.FEMININO )
+    then
+        System.out.println($homem.getNome() + " nao pegou a " + $mulher.getNome() + ".");
+end
