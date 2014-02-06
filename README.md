@@ -1,8 +1,10 @@
 demo-drools
 ===========
 
-Projeto utilizado para a demonstração do JBoss Drools 5 com jBPM 5 no The Developers Conference 2013 (Florianópolis e São Paulo). 
+Projeto utilizado para a demonstraï¿½ï¿½o do JBoss Drools 5 com jBPM 5 no The Developers Conference 2013 (Florianï¿½polis e Sï¿½o Paulo). 
 
-Apresentação: http://www.slideshare.net/ricardolonga/apresentao-22088724
+Apresentaï¿½ï¿½o: http://www.slideshare.net/ricardolonga/apresentao-22088724
 
 Autor: Ricardo da Silva Longa (@ricardolonga) / www.ricardolonga.com.br 
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/gujavasc/demo-drools/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
